@@ -155,8 +155,9 @@ Transform:
   - {fileID: 724736785}
   - {fileID: 1113199590}
   - {fileID: 1651333106}
+  - {fileID: 83619909}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &83619908
 GameObject:
@@ -181,12 +182,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 83619908}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 20, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 25385380}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &272354930
@@ -945,7 +946,6 @@ MonoBehaviour:
   clampAngle: 70
   topViewPos: {fileID: 83619909}
   smoothTime: 0.3
-  topviewMoveCheck: 0
   realCamera: {fileID: 963194228}
   dirNormalized: {x: 0, y: 0, z: 0}
   finalDir: {x: 0, y: 0, z: 0}
@@ -1197,7 +1197,7 @@ Transform:
   - {fileID: 2003522276}
   - {fileID: 971079494}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1367629031
 MonoBehaviour:
@@ -1211,7 +1211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe8b280fe56ada48be417f806e1ce6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 0}
+  bulletPrefab: {fileID: 6297136291268841940, guid: 7f7d6eef00c11594196bad419f0524d7, type: 3}
   spawnPoint:
   - {fileID: 496899112}
   - {fileID: 2003522276}

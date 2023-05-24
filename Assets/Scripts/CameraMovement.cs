@@ -15,7 +15,6 @@ public class CameraMovement : MonoBehaviour
     public Transform topViewPos;
     public float smoothTime = 0.3f;
     private Vector3 velocity = Vector3.zero;
-    public bool topviewMoveCheck = false;
 
     private float rotX;
     private float rotY;
@@ -30,7 +29,6 @@ public class CameraMovement : MonoBehaviour
 
     private void Start()
     {
-        topviewMoveCheck = true;
         rotX = transform.localRotation.eulerAngles.x;
         rotY = transform.localRotation.eulerAngles.y;
 
@@ -44,23 +42,16 @@ public class CameraMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!topviewMoveCheck)
-        {
             rotX += -(Input.GetAxis("Mouse Y")) * sensitivity * Time.deltaTime;
             rotY += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
 
             rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
             Quaternion rot = Quaternion.Euler(rotX, rotY, 0);
             transform.rotation = rot;
-        }
-
-        TopViewMovePos();
     }
 
     private void LateUpdate()
     {
-        if (!topviewMoveCheck)
-        {
             transform.position = Vector3.MoveTowards(transform.position, objectToFollow.position, followSpeed * Time.deltaTime);
 
             finalDir = transform.TransformPoint(dirNormalized * maxDistance);
@@ -76,27 +67,5 @@ public class CameraMovement : MonoBehaviour
                 finalDistance = maxDistance;
             }
             realCamera.localPosition = Vector3.Lerp(realCamera.localPosition, dirNormalized * finalDistance, Time.deltaTime * smoothness);
-        }
-    }
-
-    void TopViewMovePos()
-    {
-        if (topviewMoveCheck)
-        {
-            Camera.main.transform.position = Vector3.SmoothDamp(Camera.main.transform.position, topViewPos.position, ref velocity, smoothTime);
-            Vector3 l_vector = objectToFollow.transform.position - Camera.main.transform.position;
-            Camera.main.transform.rotation = Quaternion.Lerp(Camera.main.transform.rotation, Quaternion.LookRotation(l_vector).normalized, Time.deltaTime * 2f);
-
-            /*
-            if (Vector3.Distance(topViewPos.position, Camera.main.transform.position) < 0.1f)
-            {
-                topviewMoveCheck = false;
-            }
-            */
-        }
-        else
-        {
-            Camera.main.transform.rotation = Quaternion.Euler(rotX, rotY, 0);
-        }
     }
 }
