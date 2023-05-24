@@ -11,9 +11,18 @@ public class PlayerMove : MonoBehaviour
     public float speed = 5f;
     public float runSpeed = 8f;
     public float finalSpeed;
+    public float jumpPower = 10f;
+    public float jumpCoolTime = 1.5f;
+    public float gravity = 15;
+    public float dashTime = 0.5f;
+    
     public bool toggleCameraRotation;
     public bool run;
-
+    public bool isJumping = false;
+    public bool canJumping = true;
+    public bool canDash = true;
+    public bool isDashing = false;
+    public Vector3 MoveDir;
     public float smoothness = 10;
     private void Start()
     {
@@ -38,7 +47,34 @@ public class PlayerMove : MonoBehaviour
         {
             run = false;
         }
+        if(Input.GetKeyDown(KeyCode.Space) && canJumping)
+        {
+            StartCoroutine(Jump());
+        }
+        if (canDash && Input.GetKeyDown(KeyCode.E))
+        { 
+            StartCoroutine(Dash());
+        }
+        //ม฿ทย
+        MoveDir.y -= gravity * Time.deltaTime;
+
+        if( !isDashing )
+        {
+            _controller.Move(MoveDir * Time.deltaTime);
+        }
         InputMovement();
+    }
+    private void FixedUpdate()
+    {
+        if (isJumping)
+        {
+            isJumping = false;
+            MoveDir.y = jumpPower;
+        }
+        if (isDashing)
+        {
+            gameObject.transform.Translate(Vector3.forward * 0.2f);
+        }
     }
     private void LateUpdate()
     {
@@ -58,5 +94,21 @@ public class PlayerMove : MonoBehaviour
         Vector3 moveDirection = forward * Input.GetAxisRaw("Vertical") + right * Input.GetAxisRaw("Horizontal");
 
         _controller.Move(moveDirection.normalized * finalSpeed * Time.deltaTime);
+    }
+    public IEnumerator Jump()
+    {
+        isJumping = true;
+        canJumping = false;
+        yield return new WaitForSeconds(jumpCoolTime);
+        canJumping = true;
+    }
+    public IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        yield return new WaitForSeconds(dashTime);
+        isDashing = false;
+        yield return new WaitForSeconds(2);
+        canDash = true;
     }
 }
