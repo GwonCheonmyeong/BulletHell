@@ -16,7 +16,9 @@ public class SpawnManager : MonoBehaviour
         bulletPool = new ObjectPool<Bullet>(
             createFunc: () =>
             {
-                return Instantiate(bulletPrefab);
+                var createHat = Instantiate(bulletPrefab);
+                createHat.returnPool = bulletPool;
+                return createHat;
             },
             actionOnGet: (bullet) => // 오브젝트를 풀에서 가져가는 과정의 함수
             {
@@ -32,6 +34,17 @@ public class SpawnManager : MonoBehaviour
             },
             maxSize: 100
             );
+
+        StartCoroutine(BulletCreative());
+    }
+
+    IEnumerator BulletCreative()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            CreateBullet();
+        }
     }
 
     private void CreateBullet()
@@ -41,10 +54,5 @@ public class SpawnManager : MonoBehaviour
         var bullet = bulletPool.Get();
         bullet.transform.position = spawnPoint[ran].transform.position;
         bullet.transform.rotation = spawnPoint[ran].transform.rotation;
-    }
-
-    private void ReleaseBullet(Bullet bullet)
-    {
-        bulletPool.Release(bullet);
     }
 }

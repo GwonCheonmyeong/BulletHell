@@ -15,7 +15,7 @@ public class PlayerMove : MonoBehaviour
     public float jumpCoolTime = 1.5f;
     public float gravity = 15;
     public float dashTime = 0.5f;
-    
+    public int Hp = 1;
     public bool toggleCameraRotation;
     public bool run;
     public bool isJumping = false;
@@ -31,6 +31,11 @@ public class PlayerMove : MonoBehaviour
     }
     private void Update()
     {
+        if(Hp <= 0)
+        {
+            Time.timeScale = 0;
+            gameObject.SetActive(false);
+        }
         if(Input.GetKey(KeyCode.LeftAlt))
         {
             toggleCameraRotation = true;
