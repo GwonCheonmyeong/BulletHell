@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
 {
     public Bullet bulletPrefab;
 
+    public float bulletSpeed;
     public Transform[] spawnPoint;
 
     private ObjectPool<Bullet> bulletPool;
@@ -32,7 +33,7 @@ public class SpawnManager : MonoBehaviour
             {
                 Destroy(bullet.gameObject);
             },
-            maxSize: 100
+            maxSize: 1000
             );
 
         StartCoroutine(BulletCreative());
@@ -42,17 +43,18 @@ public class SpawnManager : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(bulletSpeed);
             CreateBullet();
         }
     }
 
     private void CreateBullet()
     {
-        int ran = Random.Range(0, spawnPoint.Length);
-
-        var bullet = bulletPool.Get();
-        bullet.transform.position = spawnPoint[ran].transform.position;
-        bullet.transform.rotation = spawnPoint[ran].transform.rotation;
+        for(int i = 0; i< spawnPoint.Length;i++)
+        {
+            var bullet = bulletPool.Get();
+            bullet.transform.position = spawnPoint[i].transform.position;
+            bullet.transform.rotation = spawnPoint[i].transform.rotation;
+        }
     }
 }

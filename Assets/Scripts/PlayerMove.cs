@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
 {
     Camera _camera;
     CharacterController _controller;
+
+    public Image[] hearts;
 
     public float speed = 5f;
     public float runSpeed = 8f;
@@ -15,7 +19,7 @@ public class PlayerMove : MonoBehaviour
     public float jumpCoolTime = 1.5f;
     public float gravity = 15;
     public float dashTime = 0.5f;
-    public int Hp = 1;
+    public int Hp;
     public bool toggleCameraRotation;
     public bool run;
     public bool isJumping = false;
@@ -28,6 +32,7 @@ public class PlayerMove : MonoBehaviour
     {
         _camera = Camera.main;
         _controller = this.GetComponent<CharacterController>();
+        
     }
     private void Update()
     {
